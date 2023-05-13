@@ -1,0 +1,25 @@
+@model IEnumerable<FPTBook.Models.Book>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1 class="book-heading">FPT Book</h1>
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-10">
+        <div class="wrap">
+
+            @foreach (var item in Model)
+            {
+                <img src="~/images/@item.BookURL" class="img" height="80" width="80" asp-append-version="true" />
+                <h3>@Html.DisplayFor(modelItem => item.Name)</h3>
+                <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                <a class="btn btn-primary"><button>@Html.DisplayFor(modelItem => item.Price)</button></a>
+            }
+
+
+
+        </div>
+    </div>
+</div>
