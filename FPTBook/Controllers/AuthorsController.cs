@@ -69,7 +69,6 @@ namespace FPTBook.Controllers
 
                 _context.Add(author);
                 await _context.SaveChangesAsync();
-                _toastNoti.AddSuccessToastMessage("An event is create successfully!");
                 return RedirectToAction(nameof(Index));
             }
             _toastNoti.AddErrorToastMessage("An error occured when creating an event!");

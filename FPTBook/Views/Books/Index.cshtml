@@ -1,53 +1,56 @@
 ﻿@model IEnumerable<FPTBook.Models.Book>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List of Books";
 }
 
-<h1>Index</h1>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.Name
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="@item.BookURL" width="100%" style="max-width: 500px;max-height: 300px ;width:auto; height:auto" alt="@item.Name">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">@item.Description</p>
+                            
+                            <p class="card-text ">
+                                <b>Status: </b>
+                                <span class="badge bg-success text-white">AVAILABLE</span>
+                            </p>
 
-<p>
-    <a class="btn btn-outline-primary" asp-action="Create">Create New A Book</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BookURL)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                <img class="rounded-circle" src="@item.BookURL" alt="@item.Name" style="max-width:150px;">
-            </td>
-            <td>
-                <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer ">
+                            <p class="card-text">
+                                <a class="btn btn-success text-white">
+                                    <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary float-end">
+                                    <i class="bi bi-eye-fill"></i> Edit
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="position: fixed; right: 25px; bottom: 25px" class="text-white">
+                <a asp-action="Create" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Add New </a>
+            </div>
+        </div>
+       
+    } 
+</div>

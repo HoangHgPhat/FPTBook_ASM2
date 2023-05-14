@@ -13,6 +13,14 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <div class="form-group text-center">
+                <img class="border-info rounded" style="width: 300px" id="ProfilePicturePreview" />
+            </div>
+            <div class="form-group">
+                <label asp-for="BookURL" class="control-label"></label>
+                <input asp-for="BookURL" class="form-control" />
+                <span asp-validation-for="BookURL" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -28,11 +36,7 @@
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="BookURL" class="control-label"></label>
-                <input asp-for="BookURL" class="form-control" />
-                <span asp-validation-for="BookURL" class="text-danger"></span>
-            </div>
+            
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -46,4 +50,15 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $("#BookURL").val();
+        })
+
+        $("#BookURL").on("change", function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $(this).val();
+        })
+    </script>
 }

@@ -32,4 +32,8 @@ body {
     border-radius: 10px;
 }
 
+.dropdown {
+    display: flex;
+}
+
 

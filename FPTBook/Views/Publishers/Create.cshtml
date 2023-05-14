@@ -12,9 +12,12 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group text-center">
+                <img style="width: 300px" id="ProfilePicturePreview" />
+            </div>
             <div class="form-group">
                 <label asp-for="ProfileURL" class="control-label"></label>
-                <input asp-for="ProfileURL" class="form-control" type="file"/>
+                <input asp-for="ProfileURL" class="form-control"/>
                 <span asp-validation-for="ProfileURL" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,5 +42,18 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $("#ProfileURL").val();
+        })
+
+        $("#ProfileURL").on("change", function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $(this).val();
+        })
+    </script>
 }

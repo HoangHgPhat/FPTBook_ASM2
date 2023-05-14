@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<FPTBook.Models.Publisher>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List of Publishers";
 }
 
-<h1>Index</h1>
+<h1>List of Publishers</h1>
 
-<p>
-    <a class="btn btn-outline-primary" asp-action="Create">Create New A Publisher</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -27,16 +24,16 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                    <img src="~/images/@item.ProfileURL" class="rounded-circle" height="80" width="80" asp-append-version="true" />
+            <td class="align-middle">
+                <img src="@item.ProfileURL" class="rounded" style="max-width: 150px" />
             </td>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td>
+            <td class="align-middle">
                 @Html.DisplayFor(modelItem => item.Bio)
             </td>
-            <td>
+            <td class="align-middle">
                 <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -44,4 +41,7 @@
         </tr>
 }
     </tbody>
+    <div style="position: fixed; right: 25px; bottom: 25px" class="text-white">
+        <a asp-action="Create" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Add New </a>
+    </div>
 </table>
