@@ -13,35 +13,52 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Movies" asp-action="Index">FPT Book</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Books" asp-action="Index">FPT Book</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Books" asp-action="Index"><i class="bi bi-book"></i>Books</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                               data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="badge-info bi-gear"></i> Management
-                            </a>
-
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="Authors" asp-action="Index"><i class="bi bi-camera-reels"></i> Authors</a>
-                                <a class="dropdown-item" asp-controller="Publishers" asp-action="Index"><i class="bi bi-headset"></i> Publisher</a>
-                            </div>
-                        </li>
+                        
+                        @if (User != null)
+                            @if(User.Identity != null)
+                                @if(User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="bi bi-gear"></i> Management
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" asp-controller="Authors" asp-action="Index"><i class="bi bi-person"></i> Authors</a>
+                                            <a class="dropdown-item" asp-controller="Publishers" asp-action="Index"><i class="bi bi-person"></i> Publishers</a>
+                                            <a class="dropdown-item" asp-controller="Books" asp-action="Index"><i class="bi bi-book"></i> Books</a>
+                                        </div>
+                                    </li>
+                                    <li class="nav-item float-end">
+                                        <a class="btn btn-outline-secondary my-2 my-sm-0" asp-controller="CartItems" asp-action="Index"><i class="bi bi-cart-plus"></i></a>
+                                    </li>
+                                }
                     </ul>
-
-                    <form class="form-inline my-2 my-lg-0" asp-controller="Movies" asp-action="Filter" style="padding-right: 25px;">
+                    <!--  
+                        <form class="form-inline my-2 my-lg-0" asp-controller="Movies" asp-action="Filter" style="padding-right: 25px;">
                         <input name="searchString" type="text" class="form-control-sms" placeholder="Search for a movie..." aria-label="Recipient's username" aria-describedby="button-addon2">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
-                    </form>
+
+
+                    </form> -->
+                   
+                    
                     <partial name="_LoginPartial" />
                 </div>
+                @if (User != null)
+                    @if (User.Identity != null)
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div style="position: fixed; right: 25px; bottom: 25px" class="text-white">
+                                <a asp-controller="Books" asp-action="Create" class="btn btn-success"> <i class="bi bi-plus-circle"></i> Add New </a>
+                            </div>
+                        }
             </div>
         </nav>
     </header>

@@ -13,5 +13,6 @@ namespace FPTBook.Data
         public DbSet<FPTBook.Models.Author> Author { get; set; } = default!;
         public DbSet<FPTBook.Models.Publisher> Publisher { get; set; } = default!;
         public DbSet<FPTBook.Models.Book> Book { get; set; } = default!;
+        public DbSet<FPTBook.Models.CartItem> CartItem { get; set; } = default!;
     }
 }

@@ -1,9 +1,7 @@
 ﻿using FPTBook.Data;
 using FPTBook.Models;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
 
 namespace FPTBook.Controllers
 {
@@ -13,20 +11,36 @@ namespace FPTBook.Controllers
         private readonly IWebHostEnvironment webHostEnvironment;
         private readonly ApplicationDbContext dbContext;
 
-        public HomeController(ApplicationDbContext context,ILogger<HomeController> logger, IWebHostEnvironment hostEnvironment)
+        public HomeController(ApplicationDbContext context, ILogger<HomeController> logger, IWebHostEnvironment hostEnvironment)
         {
             dbContext = context;
+
             _logger = logger;
             webHostEnvironment = hostEnvironment;
         }
 
-       
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            
-            return View();
+            return dbContext.Book != null ?
+                        View(await dbContext.Book.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.Book'  is null.");
         }
 
-       
+        public async Task<IActionResult> AddToCart(int? Id)
+        {
+            Book b;
+            CartItem item = new CartItem();
+            if (Id != null)
+            {
+                b = dbContext.Book.FirstOrDefault(b => b.Id == Id);
+                item.Book = b;
+                item.BookName = b.Name;
+                item.Quantity = 1;
+                item.Price = b.Price * item.Quantity;
+            }
+            dbContext.Add(item);
+            await dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

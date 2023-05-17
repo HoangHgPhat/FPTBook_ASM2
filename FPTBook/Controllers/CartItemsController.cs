@@ -5,87 +5,87 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FPTBook.Controllers
 {
-    public class BooksController : Controller
+    public class CartItemsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public BooksController(ApplicationDbContext context)
+        public CartItemsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Books
+        // GET: CartItems
         public async Task<IActionResult> Index()
         {
-            return _context.Book != null ?
-                        View(await _context.Book.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.Book'  is null.");
+            return _context.CartItem != null ?
+                        View(await _context.CartItem.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.CartItem'  is null.");
         }
 
-        // GET: Books/Details/5
+        // GET: CartItems/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Book == null)
+            if (id == null || _context.CartItem == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.Book
+            var cartItem = await _context.CartItem
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+            if (cartItem == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(cartItem);
         }
 
-        // GET: Books/Create
+        // GET: CartItems/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Books/Create
+        // POST: CartItems/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,BookURL")] Book book)
+        public async Task<IActionResult> Create([Bind("Id,BookName,Quantity,Price,Total")] CartItem cartItem)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(book);
+                _context.Add(cartItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            return View(cartItem);
         }
 
-        // GET: Books/Edit/5
+        // GET: CartItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Book == null)
+            if (id == null || _context.CartItem == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.Book.FindAsync(id);
-            if (book == null)
+            var cartItem = await _context.CartItem.FindAsync(id);
+            if (cartItem == null)
             {
                 return NotFound();
             }
-            return View(book);
+            return View(cartItem);
         }
 
-        // POST: Books/Edit/5
+        // POST: CartItems/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,BookURL")] Book book)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,BookName,Quantity,Price,Total")] CartItem cartItem)
         {
-            if (id != book.Id)
+            if (id != cartItem.Id)
             {
                 return NotFound();
             }
@@ -94,12 +94,12 @@ namespace FPTBook.Controllers
             {
                 try
                 {
-                    _context.Update(book);
+                    _context.Update(cartItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BookExists(book.Id))
+                    if (!CartItemExists(cartItem.Id))
                     {
                         return NotFound();
                     }
@@ -110,49 +110,49 @@ namespace FPTBook.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            return View(cartItem);
         }
 
-        // GET: Books/Delete/5
+        // GET: CartItems/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Book == null)
+            if (id == null || _context.CartItem == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.Book
+            var cartItem = await _context.CartItem
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (book == null)
+            if (cartItem == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(cartItem);
         }
 
-        // POST: Books/Delete/5
+        // POST: CartItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Book == null)
+            if (_context.CartItem == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Book'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.CartItem'  is null.");
             }
-            var book = await _context.Book.FindAsync(id);
-            if (book != null)
+            var cartItem = await _context.CartItem.FindAsync(id);
+            if (cartItem != null)
             {
-                _context.Book.Remove(book);
+                _context.CartItem.Remove(cartItem);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BookExists(int id)
+        private bool CartItemExists(int id)
         {
-            return (_context.Book?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.CartItem?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
